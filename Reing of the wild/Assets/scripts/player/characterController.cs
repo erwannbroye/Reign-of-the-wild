@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class characterController : MonoBehaviour
 {
     public float Speed = 5f;
-    public float BaseSpeed = 5f;
+    public float runSpeed = 10f;
     public float JumpHeight = 2f;
     public float DashDistance = 5f;
     public float playerWeight;
@@ -36,7 +36,6 @@ public class characterController : MonoBehaviour
     void Start()
     {
         Controller = GetComponent<CharacterController>();
-        BaseSpeed = Speed;
         DashEnable = true;
         Climbing = false;
         anim = GetComponentInChildren<Animator>();
@@ -60,10 +59,6 @@ public class characterController : MonoBehaviour
         xAxis = (Input.GetAxis("Vertical"));
         zAxis = (Input.GetAxis("Horizontal"));
 
-        if (Controller.isGrounded)
-            roulade();
-        else
-            dash();
         run();
         jump();
         interact();
@@ -87,10 +82,10 @@ public class characterController : MonoBehaviour
         move.y = yStore;
 
         // character slide down slopes 
-        if (!onSlop) {
-            move.x += (1f - hitNormal.y) * hitNormal.x * (Speed * slideFriction);
-            move.z += (1f - hitNormal.y) * hitNormal.z * (Speed * slideFriction);
-        }
+        // if (!onSlop) {
+        //     move.x += (1f - hitNormal.y) * hitNormal.x * (Speed * slideFriction);
+        //     move.z += (1f - hitNormal.y) * hitNormal.z * (Speed * slideFriction);
+        // }
         //apply permanant gravity
         if (!Climbing)
             move.y = move.y + ((Physics.gravity.y - playerWeight) * Time.deltaTime);
@@ -146,33 +141,11 @@ public class characterController : MonoBehaviour
     void run() 
     {
         if (Input.GetButtonDown("Fire3") && xAxis > 0)
-            Speed = BaseSpeed * 1.5f;
+            Speed = runSpeed
+ * 1.5f;
         if (Input.GetButtonUp("Fire3"))
-            Speed = BaseSpeed;
-    }
-
-    void dash() 
-    {
-        if (Input.GetButtonDown("Fire2") && DashEnable)
-            currentDashTime = 0;                
-        if (currentDashTime < maxDashTime)
-        {
-            zAxis = (zAxis != 0 ? zAxis * DashDistance : zAxis);
-            xAxis = (xAxis != 0 ? xAxis * DashDistance : xAxis);
-            currentDashTime += 1;
-        }
-    }
-
-    void roulade() 
-    {
-        if (Input.GetButtonDown("Fire2"))
-            currentDashTime = 0;                
-        if (currentDashTime < maxDashTime)
-        {
-            zAxis = (zAxis != 0 ? zAxis * DashDistance : zAxis);
-            xAxis = (xAxis != 0 ? xAxis * DashDistance : xAxis);
-            currentDashTime += 1;
-        }
+            Speed = runSpeed
+;
     }
 
     void interact()
