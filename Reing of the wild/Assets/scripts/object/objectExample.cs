@@ -2,7 +2,10 @@
 
 public class objectExample : Interactable
 {
-    public override void Interact()
+
+	public Item item;
+
+	public override void Interact()
     {
         // base.Interact();
 
@@ -12,5 +15,7 @@ public class objectExample : Interactable
     void Pickup()
     {
         Debug.Log("Picking up item");
+		Inventory.instance.AddItem(item);
+		Destroy(gameObject);
     }
 }

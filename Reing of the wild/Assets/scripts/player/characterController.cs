@@ -59,9 +59,12 @@ public class characterController : MonoBehaviour
         xAxis = (Input.GetAxis("Vertical"));
         zAxis = (Input.GetAxis("Horizontal"));
 
-        run();
-        jump();
-        interact();
+		if (Cursor.lockState == CursorLockMode.Locked)
+		{
+			run();
+			jump();
+			interact();
+		}
 
         if (Controller.isGrounded && Climbing == true && (xAxis < 0 || zAxis != 0))
             Climbing = false;

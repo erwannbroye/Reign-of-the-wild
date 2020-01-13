@@ -17,7 +17,9 @@ public class mouseLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensivity * Time.deltaTime;
+		if (Cursor.lockState == CursorLockMode.Locked)
+		{
+		float mouseX = Input.GetAxis("Mouse X") * mouseSensivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensivity * Time.deltaTime;
 
         xRotation -= mouseY;
@@ -25,5 +27,7 @@ public class mouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         player.Rotate(Vector3.up * mouseX);
         weapon.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+		}
+
     }
 }
