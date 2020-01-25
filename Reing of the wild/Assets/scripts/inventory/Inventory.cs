@@ -38,7 +38,6 @@ public class Inventory : MonoBehaviour
 
 		if (onItemChangedCallback != null)
 		{
-			Debug.Log("oui");
 			onItemChangedCallback.Invoke();
 		}
 
@@ -48,5 +47,9 @@ public class Inventory : MonoBehaviour
 	public void RemoveItem(Item item)
 	{
 		items.Remove(item);
+		if (onItemChangedCallback != null)
+		{
+			onItemChangedCallback.Invoke();
+		}
 	}
 }

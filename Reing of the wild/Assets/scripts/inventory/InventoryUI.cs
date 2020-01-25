@@ -4,7 +4,7 @@ public class InventoryUI : MonoBehaviour
 {
 
 	Inventory inventory;
-	public Transform itemsParent;
+	public GameObject itemsParent;
 
 	InventorySlot[] slots;
 
@@ -20,14 +20,14 @@ public class InventoryUI : MonoBehaviour
 	{
 		if (Input.GetButtonDown("Inventory"))
 		{
-			//Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
-			//gameObject.SetActive(!gameObject.activeSelf);
+			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
+			itemsParent.SetActive(!itemsParent.activeSelf);
 		}
 	}
 
 	void UpdateUI()
 	{
-		Debug.Log("Update UI" + slots.Length + " " + inventory.items.Count);
+		// Debug.Log("Update UI " + slots.Length + " " + inventory.items.Count);
 		for (int i = 0; i < slots.Length; i++)
 		{
 			if (i < inventory.items.Count)

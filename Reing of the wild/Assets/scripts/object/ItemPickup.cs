@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class objectExample : Interactable
+public class ItemPickup : Interactable
 {
 
 	public Item item;
@@ -15,7 +15,7 @@ public class objectExample : Interactable
     void Pickup()
     {
         Debug.Log("Picking up item");
-		Inventory.instance.AddItem(item);
-		Destroy(gameObject);
+		if (Inventory.instance.AddItem(item))
+			Destroy(gameObject);
     }
 }
