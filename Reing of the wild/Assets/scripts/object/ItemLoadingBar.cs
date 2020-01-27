@@ -6,15 +6,37 @@ public class ItemLoadingBar : MonoBehaviour
 {
 
 	public Transform LoadingBar;
+	bool isLoading;
+	float useDelay;
 
-    public IEnumerator FillLoadingBar(float useDelay)
+	void Start()
 	{
-		LoadingBar.gameObject.SetActive(true);
-		for (int i = 0; i < 1000; i++)
+		isLoading = false;
+	}
+
+	void Update()
+	{
+		if (isLoading == true)
 		{
-			LoadingBar.GetChild(0).localScale = new Vector3(i / 1000f, LoadingBar.GetChild(0).localScale.y, LoadingBar.GetChild(0).localScale.z);
-			yield return new WaitForSeconds(useDelay / 1000f);
+			LoadingBar.gameObject.SetActive(true);
+			float loadingBarX = LoadingBar.GetChild(0).localScale.x;
+			if (loadingBarX >= 1f)
+			{
+				LoadingBar.gameObject.SetActive(false);
+				isLoading = false ;
+				LoadingBar.GetChild(0).localScale = new Vector3(0f, LoadingBar.GetChild(0).localScale.y, LoadingBar.GetChild(0).localScale.z);
+				return;
+			}
+			LoadingBar.GetChild(0).localScale = new Vector3(loadingBarX + (Time.deltaTime / useDelay), LoadingBar.GetChild(0).localScale.y, LoadingBar.GetChild(0).localScale.z);
 		}
-		LoadingBar.gameObject.SetActive(false);
+	}
+
+    public void FillLoadingBar(float newUseDelay)
+	{
+		if (newUseDelay > 0f)
+		{
+			useDelay = newUseDelay;
+			isLoading = true;
+		}
 	}
 }

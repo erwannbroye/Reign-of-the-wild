@@ -5,6 +5,11 @@ public class InventoryUI : MonoBehaviour
 
 	Inventory inventory;
 	public GameObject itemsParent;
+	public GameObject inventoryUI;
+
+	public Hunger hunger;
+	public Thirst thirst;
+	public Sleep sleep;
 
 	InventorySlot[] slots;
 
@@ -21,7 +26,10 @@ public class InventoryUI : MonoBehaviour
 		if (Input.GetButtonDown("Inventory"))
 		{
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
-			itemsParent.SetActive(!itemsParent.activeSelf);
+			inventoryUI.SetActive(!inventoryUI.activeSelf);
+			hunger.switchPos();
+			thirst.switchPos();
+			sleep.switchPos();
 		}
 	}
 

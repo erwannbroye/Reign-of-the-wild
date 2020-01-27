@@ -22,10 +22,6 @@ public class EquipmentUI : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetButtonDown("Inventory"))
-		{
-			itemsParent.SetActive(!itemsParent.activeSelf);
-		}
 	}
 
 	void UpdateEquipmentUI()

@@ -13,7 +13,6 @@ public class InventorySlot : MonoBehaviour
 	public void AddItem(Item newItem)
 	{
 		item = newItem;
-
 		icon.sprite = item.icon;
 		icon.enabled = true;
 	}
@@ -37,7 +36,7 @@ public class InventorySlot : MonoBehaviour
 		if (item)
 		{
 			if (item.useDelay > 0)
-				LoadBar.StartCoroutine("FillLoadingBar" , item.useDelay);
+				LoadBar.FillLoadingBar(item.useDelay);
 			StartCoroutine("UseItemAfterDelay");
 		}
 	}
