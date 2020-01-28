@@ -9,25 +9,24 @@ public class mouseLook : MonoBehaviour
     public Transform player;
     public Transform weapon;
     float xRotation = 0f;
-
     void Start()
     {
-
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         float mouseX = Input.GetAxis("Mouse X") * mouseSensivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensivity * Time.deltaTime;
-
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -70, 70);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         player.Rotate(Vector3.up * mouseX);
         weapon.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+          if (Input.GetButtonDown("Cancel")) {
+             Cursor.lockState = CursorLockMode.None;
+         }
     }
 }
