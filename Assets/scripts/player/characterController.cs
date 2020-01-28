@@ -53,6 +53,7 @@ public class characterController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         cam = Camera.main;
         CameraNormalView = true;
+        crouch = false;
     }
 
     void OnControllerColliderHit (ControllerColliderHit hit)
@@ -145,7 +146,7 @@ public class characterController : MonoBehaviour
     void crouching()
     {
         if (Input.GetButtonDown("Fire1")) {
-            Controller.height = 2.5f;
+            Controller.height = 1.0f;
             crouch = true;
             Speed = 2;
         }
@@ -153,8 +154,10 @@ public class characterController : MonoBehaviour
             crouch = false;
             Speed = 5;
         }
-        if (!Physics.Raycast(transform.position + Vector3.up,  Vector3.up,2f) && crouch == false && Controller.height < 4)
+        if (!Physics.Raycast(transform.position + Vector3.up,  Vector3.up,2f) && crouch == false && Controller.height < 3)
             Controller.height += (10 * Time.deltaTime);
+        if (Controller.height > 3.2)
+            Controller.height = 3.0f;
 
 
     }
