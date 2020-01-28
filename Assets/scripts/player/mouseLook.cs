@@ -27,7 +27,9 @@ public class mouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         player.Rotate(Vector3.up * mouseX);
         weapon.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-		}
-
+          if (Input.GetButtonDown("Cancel")) {
+             Cursor.lockState = CursorLockMode.None;
+         }
+     }
     }
 }
