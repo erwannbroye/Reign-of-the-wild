@@ -6,6 +6,9 @@ ModelImporter:
   - first:
       74: 91952026964097789
     second: ArmatureBras|Action
+  - first:
+      74: 1989289236423521904
+    second: Default Take
   externalObjects: {}
   materials:
     importMaterials: 1
