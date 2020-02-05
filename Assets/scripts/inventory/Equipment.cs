@@ -7,19 +7,31 @@ public class Equipment : Item
 {
 	public EquipmentSlot equipSlot;
 
+	void Start()
+	{
+	}
+
+	public override void Unequip()
+	{
+		base.Unequip();
+		Inventory.instance.Unequip(this);
+		if (!Inventory.instance.AddItem(this))
+			Inventory.instance.Equip(this);
+	}
+
 	public override void Use()
 	{
 		base.Use();
-		if (EquipmentManager.instance.isEquiped(this))
+		if (Inventory.instance.isSlotAvailable(this.equipSlot))
 		{
-			EquipmentManager.instance.Unequip(this);
-			if (!Inventory.instance.AddItem(this))
-				EquipmentManager.instance.Equip(this);
-		}
-		else
-		{
-			EquipmentManager.instance.Equip(this);
+			Inventory.instance.Equip(this);
 			Inventory.instance.RemoveItem(this);
+		} else
+		{
+			Item tmpItem = Inventory.instance.currentEquipment[(int)this.equipSlot];
+			Inventory.instance.Equip(this);
+			Inventory.instance.RemoveItem(this);
+			Inventory.instance.AddItem(tmpItem);
 		}
 	}
 }

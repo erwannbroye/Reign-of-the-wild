@@ -15,4 +15,5 @@ MonoBehaviour:
   name: Shirt
   icon: {fileID: 21300000, guid: ce4eb18cbdeb4eb43bb5e6f03beb4aac, type: 3}
   useDelay: 3
+  type: 1
   equipSlot: 1

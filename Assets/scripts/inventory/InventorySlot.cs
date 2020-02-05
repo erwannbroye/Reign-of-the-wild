@@ -31,6 +31,12 @@ public class InventorySlot : MonoBehaviour
 		item.Use();
 	}
 
+	IEnumerator UnequipItemAfterDelay()
+	{
+		yield return new WaitForSeconds(item.useDelay);
+		item.Unequip();
+	}
+
 	public void UseItem()
 	{
 		if (item)
@@ -38,6 +44,16 @@ public class InventorySlot : MonoBehaviour
 			if (item.useDelay > 0)
 				LoadBar.FillLoadingBar(item.useDelay);
 			StartCoroutine("UseItemAfterDelay");
+		}
+	}
+
+	public void UnequipItem()
+	{
+		if (item)
+		{
+			if (item.useDelay > 0)
+				LoadBar.FillLoadingBar(item.useDelay);
+			StartCoroutine("UnequipItemAfterDelay");
 		}
 	}
 }

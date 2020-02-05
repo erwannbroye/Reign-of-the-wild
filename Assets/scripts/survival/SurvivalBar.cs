@@ -9,8 +9,7 @@ public class SurvivalBar : MonoBehaviour
 	public float decreasingRatio = 1f;
 	public Transform barUI;
 
-	public Vector3 gamePos;
-	public Vector3 inventoryPos;
+	public GameObject inventoryIcon;
 
 	void Start()
     {
@@ -25,10 +24,8 @@ public class SurvivalBar : MonoBehaviour
 
 	public void switchPos()
 	{
-		if (transform.position == gamePos)
-			transform.position = inventoryPos;
-		else
-			transform.position = gamePos;
+		gameObject.SetActive(!gameObject.activeSelf);
+		inventoryIcon.SetActive(!inventoryIcon.activeSelf);
 	}
 
 	public void increaseRatio(float changeValue)

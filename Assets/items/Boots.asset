@@ -15,4 +15,5 @@ MonoBehaviour:
   name: Boots
   icon: {fileID: 21300000, guid: 97112882ca06e9c4b996d9e6f439d47d, type: 3}
   useDelay: 0
+  type: 1
   equipSlot: 5
