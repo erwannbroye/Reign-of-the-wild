@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Gloves
   icon: {fileID: 21300000, guid: 0719a50c82423f54baf96e63485f4749, type: 3}
   useDelay: 0
-  type: 1
+  type: 2
   equipSlot: 4

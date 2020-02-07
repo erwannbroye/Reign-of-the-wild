@@ -28,10 +28,8 @@ public class Inventory : MonoBehaviour
 	public List<Item> items = new List<Item>();
 	public int size = 16;
 
-	public RectTransform inventoryParent;
-	public GameObject slotPrefab;
-
 	public Equipment[] currentEquipment;
+
 
 	void Start()
 	{
@@ -43,8 +41,6 @@ public class Inventory : MonoBehaviour
 	{
 		if (items.Count >= size)
 		{
-			for (int i = 0; i < 4; i++)
-				Instantiate(slotPrefab, inventoryParent);
 			size += 4;
 		}
 		items.Add(item);
@@ -62,16 +58,26 @@ public class Inventory : MonoBehaviour
 		items.Remove(item);
 		if (size > 16 && items.Count % 4 == 0)
 		{
-			Destroy(inventoryParent.GetChild(size - 1).gameObject);
-			Destroy(inventoryParent.GetChild(size - 2).gameObject);
-			Destroy(inventoryParent.GetChild(size - 3).gameObject);
-			Destroy(inventoryParent.GetChild(size - 4).gameObject);
 			size -= 4;
 		}
 		if (onItemChangedCallback != null)
 		{
 			onItemChangedCallback.Invoke();
 		}
+	}
+
+	public int getItemTypeNumber(ItemType itemType)
+	{
+		int size = 0;
+
+		for (int i = 0; i < items.Count; i++)
+		{
+			if (itemType == ItemType.General || items[i].type == itemType)
+			{
+				size += 1;
+			}
+		}
+		return (size);
 	}
 
 	public void Equip(Equipment newItem)

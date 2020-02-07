@@ -17,4 +17,4 @@ public class Item : ScriptableObject
 	}
 }
 
-public enum ItemType { Heal, Equipment, Food, Tools, Craft }
+public enum ItemType { General, Heal, Equipment, Food, Tools, Craft }
