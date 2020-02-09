@@ -6,7 +6,27 @@ ModelImporter:
   - first:
       74: 91952026964097789
     second: ArmatureBras|Action
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ArmsFlesh
+    second: {fileID: 2100000, guid: 248868d9a3fb3584b881d5a5d9225fad, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ArmsJacket
+    second: {fileID: 2100000, guid: 1ced753333f9ed443b6a21655de13394, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BulletsTexture
+    second: {fileID: 2100000, guid: 9b522248e4c5c014da101f72fc81883c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: L115A3Texture
+    second: {fileID: 2100000, guid: 637fc94a58ecd3f49b7444592acca4e8, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

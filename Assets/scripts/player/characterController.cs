@@ -83,21 +83,23 @@ public class characterController : MonoBehaviour
         //     zAxis = 0;
         // }
         // if (Controller.isGrounded)
-        if (Controller.velocity.x != 0 || Controller.velocity.z != 0) {
+        if ((Controller.velocity.x != 0 || Controller.velocity.z != 0) && onSlop == true) {
             distanceCovered += Controller.velocity.magnitude * Time.deltaTime;
-            if (distanceCovered > 3) {
+            if (distanceCovered > 3 + (Speed / 10)) {
                 footstepsSound();
                 distanceCovered = 0;  
             }
         }
+        Debug.Log(onSlop);
         
         
+        if (!onSlop) {
+            move.x += (1f - hitNormal.y) * hitNormal.x * (Speed * slideFriction);
+            move.z += (1f - hitNormal.y) * hitNormal.z * (Speed * slideFriction);
+        }
 
-        // character slide down slopes 
-        // if (!onSlop) {
-        //     move.x += (1f - hitNormal.y) * hitNormal.x * (Speed * slideFriction);
-        //     move.z += (1f - hitNormal.y) * hitNormal.z * (Speed * slideFriction);
-        // }
+        // character slide down slopes
+        
         //apply permanant gravity
         if (!Climbing)
             move.y = move.y + ((Physics.gravity.y - playerWeight) * Time.deltaTime);
@@ -124,7 +126,7 @@ public class characterController : MonoBehaviour
         audioSource.volume = Random.Range(0.8f, 1f);
         if (terrainHit.collider != null) {
             Debug.Log(terrainHit.collider.tag);
-            if (terrainHit.collider.tag == "terrain")
+            if (terrainHit.collider.tag == "ice")
                 audioSource.PlayOneShot(getClip(stoneClips), 1f);
             else
                 audioSource.PlayOneShot(getClip(dirtClips), 1f);
@@ -136,7 +138,7 @@ public class characterController : MonoBehaviour
         if (Controller.isGrounded == false)
             fallTime += Time.deltaTime;
         else {
-            if (fallTime >= 0.25f) {
+            if (fallTime >= 0.25f && onSlop == true) {
                 footstepsSound();
                 fallTime = 0;
             }
