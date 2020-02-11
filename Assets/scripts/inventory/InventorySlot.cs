@@ -8,7 +8,10 @@ public class InventorySlot : MonoBehaviour
 	public Image icon;
 	public ItemLoadingBar LoadBar;
 
-	Item item;
+	public Item item;
+
+	public Sprite defaultSlot;
+	public Sprite selectedSlot;
 
 	public void AddItem(Item newItem)
 	{
@@ -55,5 +58,19 @@ public class InventorySlot : MonoBehaviour
 				LoadBar.FillLoadingBar(item.useDelay);
 			StartCoroutine("UnequipItemAfterDelay");
 		}
+	}
+
+	public void SelectItem()
+	{
+		if (item)
+		{
+			gameObject.GetComponent<Image>().sprite = selectedSlot;
+			Inventory.instance.SelectItem(gameObject);
+		}
+	}
+
+	public void UnselectItem()
+	{
+		gameObject.GetComponent<Image>().sprite = defaultSlot;
 	}
 }

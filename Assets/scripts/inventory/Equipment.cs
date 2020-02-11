@@ -21,7 +21,7 @@ public class Equipment : Item
 
 	public override void Use()
 	{
-		base.Use();
+		Inventory.instance.UnselectItem();
 		if (Inventory.instance.isSlotAvailable(this.equipSlot))
 		{
 			Inventory.instance.Equip(this);

@@ -29,6 +29,7 @@ public class Inventory : MonoBehaviour
 	public int size = 16;
 
 	public Equipment[] currentEquipment;
+	public GameObject selectedSlot = null;
 
 
 	void Start()
@@ -106,5 +107,27 @@ public class Inventory : MonoBehaviour
 		if (currentEquipment[slotIndex])
 			return (false);
 		return (true);
+	}
+
+	public void SelectItem(GameObject selectedItemSlot)
+	{
+		if (selectedSlot)
+			UnselectItem();
+		selectedSlot = selectedItemSlot;
+		if (onItemChangedCallback != null)
+		{
+			onItemChangedCallback.Invoke();
+		}
+	}
+
+	public void UnselectItem()
+	{
+		if (selectedSlot)
+			selectedSlot.GetComponent<InventorySlot>().UnselectItem();
+		selectedSlot = null;
+		if (onItemChangedCallback != null)
+		{
+			onItemChangedCallback.Invoke();
+		}
 	}
 }

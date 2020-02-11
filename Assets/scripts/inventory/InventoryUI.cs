@@ -21,6 +21,12 @@ public class InventoryUI : MonoBehaviour
 	InventorySlot[] equipmentSlots;
 	ItemType inventoryType;
 
+	public GameObject infoPanel;
+	public Text selectedItemName;
+	public Text selectedItemDescription;
+	public Image selectedItemSprite;
+	public Button useButton;
+
 	void Start()
 	{
 		inventory = Inventory.instance;
@@ -41,6 +47,7 @@ public class InventoryUI : MonoBehaviour
 			hunger.switchPos();
 			thirst.switchPos();
 			sleep.switchPos();
+			inventory.UnselectItem();
 		}
 	}
 
@@ -72,7 +79,24 @@ public class InventoryUI : MonoBehaviour
 				equipmentSlots[i].ClearSlot();
 			}
 		}
-	}
+		if (inventory.selectedSlot)
+		{
+			infoPanel.SetActive(true);
+			Item selectedItem = inventory.selectedSlot.GetComponent<InventorySlot>().item;
+			selectedItemName.text = selectedItem.name;
+			selectedItemDescription.text = selectedItem.description;
+			selectedItemSprite.sprite = selectedItem.icon;
+			useButton.transform.GetChild(0).GetComponent<Text>().text = (inventory.selectedSlot.name.Substring(0, 4) == "Equi") ? "Unequip" : (selectedItem.type == ItemType.Equipment) ? "Equip" : "Use" ;
+			useButton.onClick.RemoveAllListeners();
+			if (inventory.selectedSlot.name.Substring(0, 4) == "Equi")
+				useButton.onClick.AddListener(inventory.selectedSlot.GetComponent<InventorySlot>().UnequipItem);
+			else
+				useButton.onClick.AddListener(inventory.selectedSlot.GetComponent<InventorySlot>().UseItem);
+		} else
+		{
+			infoPanel.SetActive(false);
+		}
+	}	
 
 	public void changeInventoryType(int futureType)
 	{
@@ -106,9 +130,11 @@ public class InventoryUI : MonoBehaviour
 			}
 			slotsSize = size;
 		}
-		else if (size >= 16 && size < slotsSize)
+		else if (size < slotsSize)
 		{
 			size += (size % 4 == 0) ? 0 : (4 - size % 4);
+			if (size < 16)
+				size = 16;
 			if (size != slotsSize)
 			{
 				for (int i = slotsSize; i > size; i--)

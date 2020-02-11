@@ -18,7 +18,6 @@ public class ItemLoadingBar : MonoBehaviour
 	{
 		if (isLoading == true)
 		{
-			LoadingBar.gameObject.SetActive(true);
 			float loadingBarX = LoadingBar.GetChild(0).localScale.x;
 			if (loadingBarX >= 1f)
 			{
@@ -28,6 +27,7 @@ public class ItemLoadingBar : MonoBehaviour
 				return;
 			}
 			LoadingBar.GetChild(0).localScale = new Vector3(loadingBarX + (Time.deltaTime / useDelay), LoadingBar.GetChild(0).localScale.y, LoadingBar.GetChild(0).localScale.z);
+			LoadingBar.gameObject.SetActive(true);
 		}
 	}
 

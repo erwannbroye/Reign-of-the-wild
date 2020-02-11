@@ -4,16 +4,20 @@
 public class Item : ScriptableObject
 {
 	new public string name = "New Item";
+	public string description = "This is a description";
 	public Sprite icon = null;
 	public float useDelay = 0f;
 	public ItemType type;
 
 	public virtual void Use()
 	{
+		Inventory.instance.UnselectItem();
+		Inventory.instance.RemoveItem(this);
 	}
 
 	public virtual void Unequip()
 	{
+		Inventory.instance.UnselectItem();
 	}
 }
 
