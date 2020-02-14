@@ -17,6 +17,5 @@ public class windMove : MonoBehaviour
     {
         // transform.Rotate(rotateSpeed * Time.deltaTime ,90 ,-90);
         transform.RotateAround(transform.position, test, rotateSpeed * Time.deltaTime);
-        Debug.Log(transform.rotation.x);
     }
 }

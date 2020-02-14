@@ -90,7 +90,6 @@ public class characterController : MonoBehaviour
                 distanceCovered = 0;  
             }
         }
-        Debug.Log(onSlop);
         
         
         if (!onSlop) {
