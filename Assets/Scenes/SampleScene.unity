@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2335,7 +2335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
-  runSpeed: 10
+  runSpeed: 12
   JumpHeight: 30
   DashDistance: 5
   playerWeight: 45
@@ -2389,18 +2389,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objects:
   - name: boneFire
-    preview: {fileID: 5906333304192901193, guid: cf4d778fb2367d143b2093b5b2deed5a,
+    preview: {fileID: 1494703023053743819, guid: f9a51ff374c10a0459f63ba37cedf653,
+      type: 3}
+    prefab: {fileID: 5906333304192901193, guid: 1f707b2eba91ccb469afccd2bb6ed923,
       type: 3}
   currentObject:
     name: 
     preview: {fileID: 0}
+    prefab: {fileID: 0}
   currentPreview: {fileID: 0}
   cam: {fileID: 963194228}
   Layer:
     serializedVersion: 2
     m_Bits: 1024
   offset: 1
-  gridSize: 1
+  gridSize: 0.1
   isBuilding: 1
 --- !u!1001 &176478235
 PrefabInstance:

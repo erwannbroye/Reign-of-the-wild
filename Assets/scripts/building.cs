@@ -27,18 +27,25 @@ public class building : MonoBehaviour
     {
         GameObject curprev = Instantiate(currentObject.preview, currentPos, Quaternion.identity) as GameObject;
         currentPreview = curprev.transform;
+        
     }
     private void Update() {
         if (isBuilding)
             startPreview();
+        if (Input.GetButtonDown("Fire1"))
+            build();
     }
 
     public void startPreview()
     {
         if (Physics.Raycast(cam.position, cam.forward, out hit, 10, Layer)) {
-            if (hit.transform != this.transform) {
+            if (hit.transform != this.transform && hit.transform.gameObject.layer == 10 && Vector3.Angle (Vector3.up, hit.normal) < 35.0f) {
                 showPreview(hit);
+                currentObject.preview.SetActive(true);
             }
+            Debug.Log(hit.transform.gameObject.layer);
+        } else {
+            currentObject.preview.SetActive(false);
         }
     }
 
@@ -53,6 +60,14 @@ public class building : MonoBehaviour
         currentPreview.position = currentPos;
         currentPreview.up = hitPoint.normal;
     }
+
+    public void build()
+    {
+        previewObject po = currentPreview.GetComponent<previewObject>();
+        if (po.isBuildable) {
+            Instantiate(currentObject.prefab, currentPos, Quaternion.identity);
+        }
+    }
 }
 
 [System.Serializable]
@@ -60,4 +75,5 @@ public class buildingObject
 {
     public string name;
     public GameObject preview;
+    public GameObject prefab;
 }

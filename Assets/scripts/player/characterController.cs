@@ -146,12 +146,12 @@ public class characterController : MonoBehaviour
 
     void crouching()
     {
-        if (Input.GetButtonDown("Fire1")) {
+        if (Input.GetButtonDown("Crouch")) {
             Controller.height = 1.0f;
             crouch = true;
             Speed = 2;
         }
-        if ( Input.GetButtonUp("Fire1")) {
+        if ( Input.GetButtonUp("Crouch")) {
             crouch = false;
             Speed = 5;
         }
@@ -187,9 +187,9 @@ public class characterController : MonoBehaviour
 
     void run() 
     {
-        if (Input.GetButtonDown("Fire3") && xAxis > 0 && crouch == false)
+        if (Input.GetButtonDown("Run") && xAxis > 0 && crouch == false)
             Speed = runSpeed;
-        if (Input.GetButtonUp("Fire3"))
+        if (Input.GetButtonUp("Run"))
             Speed = runSpeed / 2;
 ;
     }

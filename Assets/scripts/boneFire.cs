@@ -8,7 +8,7 @@ public class boneFire : MonoBehaviour
     public Light light;
     public float woodRemaining = 0;
     public float heat = 0;
-    public float intensity = 0;
+    public float intensity = 3;
     public float burningSpeed = 10;
     // Start is called before the first frame update
     void Start()
