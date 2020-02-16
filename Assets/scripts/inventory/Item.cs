@@ -15,6 +15,11 @@ public class Item : ScriptableObject
 		Inventory.instance.RemoveItem(this);
 	}
 
+	public virtual void Destroy()
+	{
+		Inventory.instance.RemoveItem(this);
+	}
+
 	public virtual void Unequip()
 	{
 		Inventory.instance.UnselectItem();

@@ -1,8 +1,25 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
+
+	#region Singleton
+
+	public static InventoryUI instance;
+
+	void Awake()
+	{
+		if (instance != null)
+		{
+			Debug.LogWarning("More than one instance of Inventory found");
+			return;
+		}
+		instance = this;
+	}
+
+	#endregion Singleton
 
 	Inventory inventory;
 	public GameObject itemsParent;
@@ -26,6 +43,10 @@ public class InventoryUI : MonoBehaviour
 	public Text selectedItemDescription;
 	public Image selectedItemSprite;
 	public Button useButton;
+	public bool openAvailable = true;
+
+	public List<Sprite> unselectedIconTab = new List<Sprite>();
+	public List<Sprite> selectedIconTab = new List<Sprite>();
 
 	void Start()
 	{
@@ -40,7 +61,7 @@ public class InventoryUI : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetButtonDown("Inventory"))
+		if (Input.GetButtonDown("Inventory") && openAvailable)
 		{
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
 			inventoryUI.SetActive(!inventoryUI.activeSelf);
@@ -53,7 +74,6 @@ public class InventoryUI : MonoBehaviour
 
 	void UpdateUI()
 	{
-		// Debug.Log("Update UI " + slots.Length + " " + inventory.items.Count);
 		int j = 0;
 		fixSlotNumber();
 		slots = itemsParent.GetComponentsInChildren<InventorySlot>();
@@ -79,6 +99,13 @@ public class InventoryUI : MonoBehaviour
 				equipmentSlots[i].ClearSlot();
 			}
 		}
+		UpdateSelectedSlot();
+		if (inventory.isCrafting)
+			GetComponent<CraftingUI>().UpdateUI(inventory.craftingObject.recipes);
+	}
+
+	void UpdateSelectedSlot()
+	{
 		if (inventory.selectedSlot)
 		{
 			infoPanel.SetActive(true);
@@ -86,17 +113,18 @@ public class InventoryUI : MonoBehaviour
 			selectedItemName.text = selectedItem.name;
 			selectedItemDescription.text = selectedItem.description;
 			selectedItemSprite.sprite = selectedItem.icon;
-			useButton.transform.GetChild(0).GetComponent<Text>().text = (inventory.selectedSlot.name.Substring(0, 4) == "Equi") ? "Unequip" : (selectedItem.type == ItemType.Equipment) ? "Equip" : "Use" ;
+			useButton.transform.GetChild(0).GetComponent<Text>().text = (inventory.selectedSlot.name.Substring(0, 4) == "Equi") ? "Unequip" : (selectedItem.type == ItemType.Equipment) ? "Equip" : "Use";
 			useButton.onClick.RemoveAllListeners();
 			if (inventory.selectedSlot.name.Substring(0, 4) == "Equi")
 				useButton.onClick.AddListener(inventory.selectedSlot.GetComponent<InventorySlot>().UnequipItem);
 			else
 				useButton.onClick.AddListener(inventory.selectedSlot.GetComponent<InventorySlot>().UseItem);
-		} else
+		}
+		else
 		{
 			infoPanel.SetActive(false);
 		}
-	}	
+	}
 
 	public void changeInventoryType(int futureType)
 	{
@@ -104,16 +132,17 @@ public class InventoryUI : MonoBehaviour
 		inventoryType = (ItemType)futureType;
 		fixSlotNumber();
 		inventory.onItemChangedCallback.Invoke();
+		inventory.UnselectItem();
 	}
 
-	public void decreaseIconAlpha(Image icon)
+	public void unselectIconTab(Image icon)
 	{
-		icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 0f);
+		icon.sprite = unselectedIconTab[icon.name[0] - 48];
 	}
 
-	public void increaseIconAlpha(Image icon)
+	public void selectIconTab(Image icon)
 	{
-		icon.color = new Color(icon.color.r, icon.color.g, icon.color.b, 1f);
+		icon.sprite = selectedIconTab[icon.name[0] - 48];
 	}
 
 	void fixSlotNumber()
@@ -127,6 +156,7 @@ public class InventoryUI : MonoBehaviour
 			{
 				GameObject newSlot = Instantiate(slotPrefab, itemsParent.transform);
 				newSlot.GetComponent<InventorySlot>().LoadBar = GetComponent<ItemLoadingBar>();
+				newSlot.GetComponent<InventorySlot>().type = SlotType.Inventory;
 			}
 			slotsSize = size;
 		}
@@ -143,6 +173,44 @@ public class InventoryUI : MonoBehaviour
 				}
 			}
 			slotsSize = size;
+		}
+	}
+
+	public void EnterCraftingMenu()
+	{
+		for (int i = 0; i < inventoryUI.transform.childCount; i++)
+		{
+			if (inventoryUI.transform.GetChild(i).name == "CaseGrid" || inventoryUI.transform.GetChild(i).name == "ItemTypes")
+				inventoryUI.transform.GetChild(i).gameObject.SetActive(true);
+			else
+				inventoryUI.transform.GetChild(i).gameObject.SetActive(false);
+		inventoryUI.SetActive(true);
+		}
+	}
+
+	public void LeaveCraftingMenu()
+	{
+		for (int i = 0; i < inventoryUI.transform.childCount; i++)
+		{
+			if (inventoryUI.transform.GetChild(i).name == "CaseGrid" || inventoryUI.transform.GetChild(i).name == "ItemTypes")
+				inventoryUI.transform.GetChild(i).gameObject.SetActive(true);
+			else
+				inventoryUI.transform.GetChild(i).gameObject.SetActive(true);
+		}
+		inventoryUI.SetActive(false);
+	}
+
+	public void ToggleOpenInventoryAvailable()
+	{
+		openAvailable = !openAvailable;
+	}
+
+	public void ToggleInfoPanelButtons()
+	{
+		for (int i = 0; i < infoPanel.transform.childCount; i++)
+		{
+			if (infoPanel.transform.GetChild(i).GetComponent<Button>())
+				infoPanel.transform.GetChild(i).gameObject.SetActive(!infoPanel.transform.GetChild(i).gameObject.activeSelf);
 		}
 	}
 }

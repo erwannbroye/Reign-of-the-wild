@@ -31,11 +31,28 @@ public class Inventory : MonoBehaviour
 	public Equipment[] currentEquipment;
 	public GameObject selectedSlot = null;
 
+	public bool isCrafting = false;
+	public Crafting craftingObject;
+
+	public InventorySlot lastSlotEntered;
+	public InventorySlot draggedSlot;
+	public GameObject dragImage;
+
 
 	void Start()
 	{
 		int numSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
 		currentEquipment = new Equipment[numSlots];
+		lastSlotEntered = null;
+		craftingObject = null;
+	}
+
+	void Update()
+	{
+		if (draggedSlot)
+		{
+			dragImage.transform.position = Input.mousePosition;
+		}
 	}
 
 	public bool AddItem(Item item)
@@ -111,7 +128,7 @@ public class Inventory : MonoBehaviour
 
 	public void SelectItem(GameObject selectedItemSlot)
 	{
-		if (selectedSlot)
+		if (selectedSlot && selectedSlot != selectedItemSlot)
 			UnselectItem();
 		selectedSlot = selectedItemSlot;
 		if (onItemChangedCallback != null)
@@ -128,6 +145,92 @@ public class Inventory : MonoBehaviour
 		if (onItemChangedCallback != null)
 		{
 			onItemChangedCallback.Invoke();
+		}
+	}
+
+	public void StartDragSlot(InventorySlot slot)
+	{
+		if (slot.item && slot.isDraggable)
+		{
+			UnselectItem();
+			draggedSlot = slot;
+			lastSlotEntered = slot;
+			slot.icon.enabled = false;
+			dragImage.GetComponent<Image>().sprite = slot.icon.sprite;
+			dragImage.SetActive(true);
+		}
+	}
+
+	public void EndDragSlot(InventorySlot slot)
+	{
+		if (slot.item && slot.isDraggable)
+		{
+			draggedSlot = null;
+			dragImage.SetActive(false);
+			if (lastSlotEntered && lastSlotEntered.isDraggable && lastSlotEntered.type != SlotType.CraftOutput)
+			{
+				if (lastSlotEntered.item)
+				{
+					SwapSlots(slot, lastSlotEntered);
+				}
+				else
+				{
+					lastSlotEntered.AddItem(slot.item);
+
+					if (slot.type == SlotType.Inventory && lastSlotEntered.type != SlotType.Inventory)
+						RemoveItem(slot.item);
+					else if (slot.type != SlotType.Inventory && lastSlotEntered.type == SlotType.Inventory)
+						AddItem(slot.item);
+					else if (slot.type == SlotType.CraftOutput && lastSlotEntered && lastSlotEntered.type == SlotType.CraftInput)
+					{
+						GetComponent<CraftingUI>().ClearAllInputSlots();
+						lastSlotEntered.AddItem(slot.item);
+						slot.ClearSlot();
+					}
+					else if (slot.type == SlotType.Inventory && lastSlotEntered.type == SlotType.Inventory)
+					{
+						for (int i = slot.transform.GetSiblingIndex(); i < items.Count; i++)
+						{
+							if (i + 1 < items.Count)
+								items[i] = items[i + 1];
+							else
+								items[i] = slot.item;
+						}
+					}
+					slot.ClearSlot();
+				}
+				if (slot.type == SlotType.CraftOutput && !slot.item && lastSlotEntered.type == SlotType.Inventory)
+					GetComponent<CraftingUI>().ClearAllInputSlots();
+				if (onItemChangedCallback != null)
+				{
+					onItemChangedCallback.Invoke();
+				}
+			} else
+			{
+				slot.icon.enabled = true;
+			}
+		}
+	}
+
+	void SwapSlots(InventorySlot slot1, InventorySlot slot2)
+	{
+		if (slot1.type == SlotType.Inventory && slot2.type == SlotType.Inventory)
+		{
+			items[slot1.transform.GetSiblingIndex()] = slot2.item;
+			items[slot2.transform.GetSiblingIndex()] = slot1.item;
+		} else if (slot1.type == SlotType.Inventory && slot2.type != SlotType.Inventory)
+		{
+			items[slot1.transform.GetSiblingIndex()] = slot2.item;
+			slot2.AddItem(slot1.item);
+		} else if (slot2.type == SlotType.Inventory && slot1.type != SlotType.Inventory)
+		{
+			items[slot2.transform.GetSiblingIndex()] = slot1.item;
+			slot2.AddItem(slot2.item);
+		} else
+		{
+			Item tmp = slot1.item;
+			slot1.AddItem(slot2.item);
+			slot2.AddItem(tmp);
 		}
 	}
 }

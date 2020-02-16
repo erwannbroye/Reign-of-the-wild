@@ -9,12 +9,27 @@ public class InventorySlot : MonoBehaviour
 	public ItemLoadingBar LoadBar;
 
 	public Item item;
+	public SlotType type;
+	public bool isDraggable;
 
 	public Sprite defaultSlot;
 	public Sprite selectedSlot;
 
+	void Start()
+	{
+		if (type != SlotType.CraftRecipe)
+			isDraggable = true;
+		else
+			isDraggable = false;
+	}
+
 	public void AddItem(Item newItem)
 	{
+		if (!newItem)
+		{
+			ClearSlot();
+			return;
+		}
 		item = newItem;
 		icon.sprite = item.icon;
 		icon.enabled = true;
@@ -73,4 +88,26 @@ public class InventorySlot : MonoBehaviour
 	{
 		gameObject.GetComponent<Image>().sprite = defaultSlot;
 	}
+
+	public void OnBeginDrag()
+	{
+		Inventory.instance.StartDragSlot(this);
+	}
+
+	public void OnEndDrag()
+	{
+		Inventory.instance.EndDragSlot(this);
+	}
+
+	public void OnPointerEnter()
+	{
+		Inventory.instance.lastSlotEntered = this;
+	}
+
+	public void OnPointerExit()
+	{
+		Inventory.instance.lastSlotEntered = null;
+	}
 }
+
+public enum SlotType { Inventory, CraftInput, CraftOutput, CraftRecipe }

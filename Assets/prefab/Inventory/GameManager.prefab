@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6248189876406456786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6248189876406456812}
+  - component: {fileID: 6248189876406456813}
+  - component: {fileID: 6248189876406456815}
+  - component: {fileID: 6248189876406456808}
+  - component: {fileID: 6248189876992380111}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6248189876406456812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248189876406456786}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.416262, y: -1.652936, z: 5.3576736}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6248189876406456813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248189876406456786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b75a92b6e123b4b8b599d9131eb4fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items: []
+  size: 16
+  currentEquipment: []
+  selectedSlot: {fileID: 0}
+  isCrafting: 0
+  craftingObject: {fileID: 0}
+  lastSlotEntered: {fileID: 0}
+  draggedSlot: {fileID: 0}
+  dragImage: {fileID: 0}
+--- !u!114 &6248189876406456815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248189876406456786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d839ab31bd0cd304faf4eaae65717e71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoadingBar: {fileID: 0}
+--- !u!114 &6248189876406456808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248189876406456786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aad82ccb8809834ca609d7c5bfc7cac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsParent: {fileID: 0}
+  inventoryUI: {fileID: 0}
+  hunger: {fileID: 0}
+  thirst: {fileID: 0}
+  sleep: {fileID: 0}
+  slotsSize: 0
+  slotPrefab: {fileID: 6792286280302521107, guid: b87f65cfcaee1f14e82518e3fec36dd4,
+    type: 3}
+  equipmentsItemsParent: {fileID: 0}
+  infoPanel: {fileID: 0}
+  selectedItemName: {fileID: 0}
+  selectedItemDescription: {fileID: 0}
+  selectedItemSprite: {fileID: 0}
+  useButton: {fileID: 0}
+  openAvailable: 1
+  unselectedIconTab:
+  - {fileID: 21300000, guid: ecd6ec069c24e574ea7791900578a39a, type: 3}
+  - {fileID: 21300000, guid: 8b434f67ea23ccd4c98072f6ffb914d4, type: 3}
+  - {fileID: 21300000, guid: 3cdcd5f646f62ee42af509e37a2ba13e, type: 3}
+  - {fileID: 21300000, guid: 298756cb72a830d4a8bed335599000b8, type: 3}
+  - {fileID: 21300000, guid: e42706727ce758a47a8e81f1166aa57b, type: 3}
+  - {fileID: 21300000, guid: 44a7618c2aa731844b5f0a3e40ef4d09, type: 3}
+  selectedIconTab:
+  - {fileID: 21300000, guid: 0b67b16dbe4b3c6459d58316bb22f4f4, type: 3}
+  - {fileID: 21300000, guid: 611cfc63d19430442af1bbe83d9c834f, type: 3}
+  - {fileID: 21300000, guid: 6dfa999f9bdab62409a3d8cfe3e63614, type: 3}
+  - {fileID: 21300000, guid: ad6feab6b8536534591f52566ebe79cb, type: 3}
+  - {fileID: 21300000, guid: 2a9e6b6e805c7584384d1e5f9d6f0d33, type: 3}
+  - {fileID: 21300000, guid: a34ea5104524f5c4584b6d2ac274dea7, type: 3}
+--- !u!114 &6248189876992380111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248189876406456786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa5525af5ac8ad498dca4fd98745a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftParent: {fileID: 0}
