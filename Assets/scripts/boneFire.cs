@@ -5,7 +5,7 @@ using UnityEngine;
 public class boneFire : MonoBehaviour
 {
     public ParticleSystem fire;
-    public Light light;
+    public Light lightSource;
     public float woodRemaining = 0;
     public float heat = 0;
     public float intensity = 3;
@@ -26,7 +26,7 @@ public class boneFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        light.intensity = intensity;
+        lightSource.intensity = intensity;
         if (woodRemaining <= 150 && intensity > 0)
         {
             fire.startLifetime = 1;

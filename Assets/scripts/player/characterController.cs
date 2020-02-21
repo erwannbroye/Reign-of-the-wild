@@ -14,13 +14,12 @@ public class characterController : MonoBehaviour
     private float xAxis;
     private float zAxis;
 
-    public const float maxDashTime = 15f;
-
     private CharacterController Controller;
     private Vector3 move;
-    float currentDashTime = maxDashTime;
     private Mesh objectMesh;
     public bool DashEnable;
+
+    public bool canMove; 
 
     public bool Climbing;
     public bool onSlop; // is on a slope or not
@@ -67,11 +66,13 @@ public class characterController : MonoBehaviour
         //control
         xAxis = (Input.GetAxis("Vertical"));
         zAxis = (Input.GetAxis("Horizontal"));
-        run();
-        jump();
-        interact();
-        crouching();
-        AimingMove();
+        if (canMove) {
+            run();
+            jump();
+            interact();
+            crouching();
+            AimingMove();
+        }
         playFallingSound();
 
         
@@ -120,11 +121,9 @@ public class characterController : MonoBehaviour
     void footstepsSound()
     {
         Physics.Raycast(transform.position +  (Vector3.down), Vector3.down, out terrainHit, Controller.bounds.extents.y + 0.5f);
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 4, Color.red);
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.volume = Random.Range(0.8f, 1f);
         if (terrainHit.collider != null) {
-            Debug.Log(terrainHit.collider.tag);
             if (terrainHit.collider.tag == "ice")
                 audioSource.PlayOneShot(getClip(stoneClips), 1f);
             else

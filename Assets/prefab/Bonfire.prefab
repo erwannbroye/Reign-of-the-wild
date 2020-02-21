@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 5996484523062494435}
   - component: {fileID: 5905261290352475204}
   - component: {fileID: 3518814118885360307}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4809,8 +4809,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fire: {fileID: 5995196708046167417}
-  light: {fileID: 5796902054512630866}
-  woodRemaining: 200
+  lightSource: {fileID: 5796902054512630866}
+  woodRemaining: 0
   heat: 0
   intensity: 0
   burningSpeed: 2
@@ -4837,7 +4837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5907681527552922222}
   - component: {fileID: 5796902054512630866}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}

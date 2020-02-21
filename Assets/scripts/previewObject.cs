@@ -10,26 +10,37 @@ public class previewObject : MonoBehaviour
     public Material red;
     public bool isBuildable;
 
-    void OnTriggerEnter(Collider other)
-    {
-        isBuildable = false;
-    }
-    void OnTriggerExit(Collider other) 
-    {
+    private void Start() {
         isBuildable = true;
     }
 
-    void Update()
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != 10 && other.gameObject.layer != 11)
+            isBuildable = false;
+        Debug.Log(other.gameObject.name);
+        Debug.Log(other.gameObject.layer);
+    }
+    void OnTriggerExit(Collider other) 
+    {
+        if (other.gameObject.layer != 10 && other.gameObject.layer != 11)
+            isBuildable = true;
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.layer != 10 && other.gameObject.layer != 11)
+            isBuildable = false;
+    }
+
+    void FixedUpdate()
     {
         changeColor();
     }
 
     public void changeColor()
     {
-        // if (col.Count == 0)
-        //     isBuildable = true;
-        // else
-        //     isBuildable = false;
+
         if (isBuildable) {
             foreach (Transform child in transform)
                 child.GetComponent<Renderer>().material = green;
@@ -37,5 +48,6 @@ public class previewObject : MonoBehaviour
             foreach (Transform child in transform)
                 child.GetComponent<Renderer>().material = red;
         }
+
     }
 }
