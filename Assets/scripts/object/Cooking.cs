@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cooking : ObjectInteractable
+public class Cooking : Interactable
 {
 
 	public GameObject cookingUI;
@@ -13,13 +13,18 @@ public class Cooking : ObjectInteractable
 		inventoryUI = InventoryUI.instance;
 	}
 
-	public override void Use()
+	public override void Interact()
 	{
-		Cursor.lockState = CursorLockMode.None;
-		inventoryUI.EnterCraftingMenu();
-		inventoryUI.ToggleOpenInventoryAvailable();
-		inventoryUI.ToggleInfoPanelButtons();
-		cookingUI.SetActive(true);
-		inventoryUI.GetComponent<CookingUI>().menuOpened = true;
+		Debug.Log("oui");
+		if (inventoryUI.GetComponent<CookingUI>().IsReadyToOpen())
+		{
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			inventoryUI.EnterCraftingMenu();
+			inventoryUI.ToggleOpenInventoryAvailable();
+			inventoryUI.ToggleInfoPanelButtons();
+			cookingUI.SetActive(true);
+			inventoryUI.GetComponent<CookingUI>().menuOpened = true;
+		}
 	}
 }

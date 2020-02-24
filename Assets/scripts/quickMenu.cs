@@ -35,22 +35,24 @@ public class quickMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (quickMenuRef.activeSelf)
-            GetCurrentMenuItem();
-        if(Input.GetButtonDown("Fire1") && quickMenuRef.gameObject.activeSelf)
-            ButtonAction();
-        if (Input.GetButtonDown("quickMenu")) {
-            quickMenuRef.gameObject.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            buildSys.isBuilding = false;
-            buildSys.currentGameObject.SetActive(false);
+		if (quickMenuRef.activeSelf)
+			GetCurrentMenuItem();
+		if (Input.GetButtonDown("Fire1") && quickMenuRef.gameObject.activeSelf)
+			ButtonAction();
+		if (Input.GetButtonDown("quickMenu"))
+		{
+			quickMenuRef.gameObject.SetActive(true);
+			Cursor.lockState = CursorLockMode.None;
+			buildSys.isBuilding = false;
+			buildSys.currentGameObject.SetActive(false);
 
-        } else if (Input.GetButtonUp("quickMenu"))
-        {
-            quickMenuRef.gameObject.SetActive(false);
-            Cursor.lockState = CursorLockMode.Locked; 
-        }
-    }
+		}
+		else if (Input.GetButtonUp("quickMenu"))
+		{
+			quickMenuRef.gameObject.SetActive(false);
+			Cursor.lockState = CursorLockMode.Locked;
+		}
+	}
 
     public void GetCurrentMenuItem()
     {

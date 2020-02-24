@@ -18,7 +18,8 @@ public class SurvivalBar : MonoBehaviour
 	
     protected virtual void Update()
     {
-		value -= decreasingRatio * Time.deltaTime;
+		if (value >= 0)
+			value -= decreasingRatio * Time.deltaTime;
 		barUI.localScale = new Vector3(barUI.localScale.x, value / 1000f, barUI.localScale.z);
 	}
 

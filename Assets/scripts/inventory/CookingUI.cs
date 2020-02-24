@@ -10,6 +10,8 @@ public class CookingUI : MonoBehaviour
 	public Slider cookingBar;
 	public GameObject cookingUI;
 	public bool menuOpened;
+	public float openCooldownTime = 0f;
+	float openCooldown;
 
 	bool isCooking = false;
 	float cookingTime;
@@ -17,6 +19,7 @@ public class CookingUI : MonoBehaviour
 
 	void Start()
 	{
+		openCooldown = openCooldownTime;
 		isCooking = false;
 		cookingTime = 0f;
 		menuOpened = false;
@@ -24,6 +27,8 @@ public class CookingUI : MonoBehaviour
 
 	void Update()
 	{
+		if (openCooldown > 0)
+			openCooldown -= Time.deltaTime;
 		if (isCooking)
 		{
 			if (cookingBar.value >= 1f)
@@ -43,11 +48,13 @@ public class CookingUI : MonoBehaviour
 			if (Input.GetButtonDown("Interact"))
 			{
 				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
 				menuOpened = false;
 				cookingUI.SetActive(false);
 				InventoryUI.instance.LeaveCraftingMenu();
 				InventoryUI.instance.ToggleOpenInventoryAvailable();
 				InventoryUI.instance.ToggleInfoPanelButtons();
+				openCooldown = openCooldownTime;
 			}
 		}
 	}
@@ -63,8 +70,8 @@ public class CookingUI : MonoBehaviour
 		}
 	}
 
-	public void Close()
+	public bool IsReadyToOpen()
 	{
-
+		return ((openCooldown <= 0) ? true : false);
 	}
 }

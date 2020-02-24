@@ -10,21 +10,33 @@ public class CraftingUI : MonoBehaviour
 	public GameObject craftingUI;
 
 	public bool menuOpened;
+	public float openCooldownTime = 0f;
+	float openCooldown;
+	bool isCrafting;
 
 	void Start()
 	{
 		menuOpened = false;
+		isCrafting = false;
 	}
 
 	void Update()
 	{
-		if (Input.GetButtonDown("Interact"))
+		if (openCooldown > 0)
+			openCooldown -= Time.deltaTime;
+		if (menuOpened)
 		{
-			Cursor.lockState = CursorLockMode.Locked;
-			craftingUI.SetActive(false);
-			InventoryUI.instance.LeaveCraftingMenu();
-			InventoryUI.instance.ToggleOpenInventoryAvailable();
-			InventoryUI.instance.ToggleInfoPanelButtons();
+			if (Input.GetButtonDown("Interact"))
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+				craftingUI.SetActive(false);
+				InventoryUI.instance.LeaveCraftingMenu();
+				InventoryUI.instance.ToggleOpenInventoryAvailable();
+				InventoryUI.instance.ToggleInfoPanelButtons();
+				openCooldown = openCooldownTime;
+				menuOpened = false;
+			}
 		}
 	}
 
@@ -85,5 +97,10 @@ public class CraftingUI : MonoBehaviour
 	static int SortByName(Item p1, Item p2)
 	{
 		return p1.name.CompareTo(p2.name);
+	}
+
+	public bool IsReadyToOpen()
+	{
+		return ((openCooldown <= 0) ? true : false);
 	}
 }

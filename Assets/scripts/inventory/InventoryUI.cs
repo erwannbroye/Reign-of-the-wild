@@ -64,6 +64,7 @@ public class InventoryUI : MonoBehaviour
 		if (Input.GetButtonDown("Inventory") && openAvailable)
 		{
 			Cursor.lockState = (Cursor.lockState == CursorLockMode.Locked) ? CursorLockMode.None : CursorLockMode.Locked;
+			Cursor.visible = !Cursor.visible;
 			inventoryUI.SetActive(!inventoryUI.activeSelf);
 			hunger.switchPos();
 			thirst.switchPos();

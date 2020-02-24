@@ -123,6 +123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craftParent: {fileID: 0}
+  craftingUI: {fileID: 0}
+  menuOpened: 0
 --- !u!114 &7386780065610473821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,7 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68cdf89758e8a046974fadd0407f2fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookingParent: {fileID: 0}
   inputSlot: {fileID: 0}
   outputSlot: {fileID: 0}
   cookingBar: {fileID: 0}
+  cookingUI: {fileID: 0}
+  menuOpened: 0

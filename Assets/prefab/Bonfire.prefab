@@ -4930,6 +4930,7 @@ GameObject:
   - component: {fileID: 5874646147170941173}
   - component: {fileID: 5882226079591866709}
   - component: {fileID: 1999234589897540942}
+  - component: {fileID: 891708908794466343}
   m_Layer: 0
   m_Name: Bonfire
   m_TagString: Untagged
@@ -5012,3 +5013,19 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: c9b8f1f6cbefe9a42ab5b51b37ad5781, type: 3}
+--- !u!114 &891708908794466343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906333304192901193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ece64b216dc47c4295e5fef02777487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 6
+  interactionTransform: {fileID: 5907808184414220641}
+  offset: {x: 0, y: 0, z: 0}
+  cookingUI: {fileID: 0}

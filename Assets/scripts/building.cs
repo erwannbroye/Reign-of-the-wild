@@ -13,6 +13,7 @@ public class building : MonoBehaviour
     public RaycastHit hit;
     public LayerMask Layer;
 
+	public GameObject cookingUIRef;
     public float offset = 1.0f;
     public float gridSize = 1.0f;
     public bool isBuilding;
@@ -20,11 +21,11 @@ public class building : MonoBehaviour
     private void Start() {
         currentObject = objects[0];
         changeCurrentBuilding(0);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+	}
 
-    public void changeCurrentBuilding(int num)
+	public void changeCurrentBuilding(int num)
     {
         currentObject = objects[num];
         if (currentPreview.gameObject != null)
@@ -74,6 +75,8 @@ public class building : MonoBehaviour
         previewObject po = currentPreview.GetComponent<previewObject>();
         if (po.isBuildable) {
             GameObject curprev =  Instantiate(currentObject.prefab, currentPos, Quaternion.identity);
+			if (currentObject.name == "boneFire")
+				curprev.GetComponent<Cooking>().cookingUI = cookingUIRef;
             curprev.transform.up = currentPreview.up;
             curprev.SetActive(true);
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Crafting : ObjectInteractable
+public class Crafting : Interactable
 {
 
 	InventoryUI inventoryUI;
@@ -19,16 +19,21 @@ public class Crafting : ObjectInteractable
 		inventory = Inventory.instance;
 	}
 
-	public override void Use()
+	public override void Interact()
 	{
-		Cursor.lockState = CursorLockMode.None;
-		inventoryUI.EnterCraftingMenu();
-		inventoryUI.ToggleOpenInventoryAvailable();
-		inventoryUI.ToggleInfoPanelButtons();
-		inventory.isCrafting = true;
-		inventory.craftingObject = this;
-		buildCraftingUI();
-		craftingUI.SetActive(true);
+		if (inventoryUI.GetComponent<CraftingUI>().IsReadyToOpen())
+		{
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			inventoryUI.EnterCraftingMenu();
+			inventoryUI.ToggleOpenInventoryAvailable();
+			inventoryUI.ToggleInfoPanelButtons();
+			inventory.isCrafting = true;
+			inventory.craftingObject = this;
+			buildCraftingUI();
+			craftingUI.SetActive(true);
+			inventoryUI.GetComponent<CraftingUI>().menuOpened = true;
+		}
 	}
 
 	void buildCraftingUI()

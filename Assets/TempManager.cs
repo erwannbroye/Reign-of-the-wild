@@ -7,6 +7,7 @@ public class TempManager : MonoBehaviour
     // Start is called before the first frame update
 
 	public Temp temp;
+	public Temp tempInventory;
 
     public float globalTemp;
     public float windFactor;
@@ -22,5 +23,6 @@ public class TempManager : MonoBehaviour
     void Update()
     {
         temp.changeRatio( (-1 * ((globalTemp + player.Temp + player.equipementHeat - 15) * (windFactor / 100 + 1) )) / 10);
+        tempInventory.changeRatio( (-1 * ((globalTemp + player.Temp + player.equipementHeat - 15) * (windFactor / 100 + 1) )) / 10);
     }
 }
