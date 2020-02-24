@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6248189876406456815}
   - component: {fileID: 6248189876406456808}
   - component: {fileID: 6248189876992380111}
+  - component: {fileID: 7386780065610473821}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -122,3 +123,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   craftParent: {fileID: 0}
+--- !u!114 &7386780065610473821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248189876406456786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f68cdf89758e8a046974fadd0407f2fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookingParent: {fileID: 0}
+  inputSlot: {fileID: 0}
+  outputSlot: {fileID: 0}
+  cookingBar: {fileID: 0}

@@ -7,6 +7,26 @@ public class CraftingUI : MonoBehaviour
 	public Transform craftParent;
 	List<Recipe> recipeList = new List<Recipe>();
 	List<Item> inputItems = new List<Item>();
+	public GameObject craftingUI;
+
+	public bool menuOpened;
+
+	void Start()
+	{
+		menuOpened = false;
+	}
+
+	void Update()
+	{
+		if (Input.GetButtonDown("Interact"))
+		{
+			Cursor.lockState = CursorLockMode.Locked;
+			craftingUI.SetActive(false);
+			InventoryUI.instance.LeaveCraftingMenu();
+			InventoryUI.instance.ToggleOpenInventoryAvailable();
+			InventoryUI.instance.ToggleInfoPanelButtons();
+		}
+	}
 
 	public void UpdateUI(List<Recipe> recipes)
 	{

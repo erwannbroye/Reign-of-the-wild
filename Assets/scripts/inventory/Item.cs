@@ -8,6 +8,9 @@ public class Item : ScriptableObject
 	public Sprite icon = null;
 	public float useDelay = 0f;
 	public ItemType type;
+	public bool cookable = false;
+	public Item cookOutput = null;
+	public float cookTime = 0f;
 
 	public virtual void Use()
 	{

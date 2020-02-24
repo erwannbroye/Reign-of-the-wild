@@ -7,7 +7,7 @@ public class ObjectInteractable : Interactable
 	public override void Interact()
 	{
 		// base.Interact();
-
+		Debug.Log("OUI");
 		Use();
 	}
 
