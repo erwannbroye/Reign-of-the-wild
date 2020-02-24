@@ -14,13 +14,12 @@ public class characterController : MonoBehaviour
     private float xAxis;
     private float zAxis;
 
-    public const float maxDashTime = 15f;
-
     private CharacterController Controller;
     private Vector3 move;
-    float currentDashTime = maxDashTime;
     private Mesh objectMesh;
     public bool DashEnable;
+
+    public bool canMove; 
 
     public bool Climbing;
     public bool onSlop; // is on a slope or not
@@ -67,11 +66,13 @@ public class characterController : MonoBehaviour
         //control
         xAxis = (Input.GetAxis("Vertical"));
         zAxis = (Input.GetAxis("Horizontal"));
-        run();
-        jump();
-        interact();
-        crouching();
-        AimingMove();
+        if (canMove) {
+            run();
+            jump();
+            interact();
+            crouching();
+            AimingMove();
+        }
         playFallingSound();
 
         
@@ -83,21 +84,22 @@ public class characterController : MonoBehaviour
         //     zAxis = 0;
         // }
         // if (Controller.isGrounded)
-        if (Controller.velocity.x != 0 || Controller.velocity.z != 0) {
+        if ((Controller.velocity.x != 0 || Controller.velocity.z != 0) && onSlop == true) {
             distanceCovered += Controller.velocity.magnitude * Time.deltaTime;
-            if (distanceCovered > 3) {
+            if (distanceCovered > 3 + (Speed / 10)) {
                 footstepsSound();
                 distanceCovered = 0;  
             }
         }
         
         
+        if (!onSlop) {
+            move.x += (1f - hitNormal.y) * hitNormal.x * (Speed * slideFriction);
+            move.z += (1f - hitNormal.y) * hitNormal.z * (Speed * slideFriction);
+        }
 
-        // character slide down slopes 
-        // if (!onSlop) {
-        //     move.x += (1f - hitNormal.y) * hitNormal.x * (Speed * slideFriction);
-        //     move.z += (1f - hitNormal.y) * hitNormal.z * (Speed * slideFriction);
-        // }
+        // character slide down slopes
+        
         //apply permanant gravity
         if (!Climbing)
             move.y = move.y + ((Physics.gravity.y - playerWeight) * Time.deltaTime);
@@ -119,12 +121,10 @@ public class characterController : MonoBehaviour
     void footstepsSound()
     {
         Physics.Raycast(transform.position +  (Vector3.down), Vector3.down, out terrainHit, Controller.bounds.extents.y + 0.5f);
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 4, Color.red);
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.volume = Random.Range(0.8f, 1f);
         if (terrainHit.collider != null) {
-            Debug.Log(terrainHit.collider.tag);
-            if (terrainHit.collider.tag == "terrain")
+            if (terrainHit.collider.tag == "ice")
                 audioSource.PlayOneShot(getClip(stoneClips), 1f);
             else
                 audioSource.PlayOneShot(getClip(dirtClips), 1f);
@@ -136,7 +136,7 @@ public class characterController : MonoBehaviour
         if (Controller.isGrounded == false)
             fallTime += Time.deltaTime;
         else {
-            if (fallTime >= 0.25f) {
+            if (fallTime >= 0.25f && onSlop == true) {
                 footstepsSound();
                 fallTime = 0;
             }
@@ -145,12 +145,12 @@ public class characterController : MonoBehaviour
 
     void crouching()
     {
-        if (Input.GetButtonDown("Fire1")) {
+        if (Input.GetButtonDown("Crouch")) {
             Controller.height = 1.0f;
             crouch = true;
             Speed = 2;
         }
-        if ( Input.GetButtonUp("Fire1")) {
+        if ( Input.GetButtonUp("Crouch")) {
             crouch = false;
             Speed = 5;
         }
@@ -186,9 +186,9 @@ public class characterController : MonoBehaviour
 
     void run() 
     {
-        if (Input.GetButtonDown("Fire3") && xAxis > 0 && crouch == false)
+        if (Input.GetButtonDown("Run") && xAxis > 0 && crouch == false)
             Speed = runSpeed;
-        if (Input.GetButtonUp("Fire3"))
+        if (Input.GetButtonUp("Run"))
             Speed = runSpeed / 2;
 ;
     }
@@ -202,6 +202,7 @@ public class characterController : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit, Vector3.Distance(cam.position, transform.position) + 1f)) {
                 Interactable interactable = hit.collider.GetComponent<Interactable>();
+                Debug.Log(hit.collider.gameObject.name);
                 if (interactable != null)
                 {
                     setFocus(interactable);
