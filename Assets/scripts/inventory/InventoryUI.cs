@@ -28,6 +28,7 @@ public class InventoryUI : MonoBehaviour
 	public Hunger hunger;
 	public Thirst thirst;
 	public Sleep sleep;
+	public Temp temp;
 
 	InventorySlot[] slots;
 
@@ -69,6 +70,7 @@ public class InventoryUI : MonoBehaviour
 			hunger.switchPos();
 			thirst.switchPos();
 			sleep.switchPos();
+			temp.switchPos();
 			inventory.UnselectItem();
 		}
 	}
