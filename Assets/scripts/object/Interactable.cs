@@ -7,6 +7,7 @@ public class Interactable : MonoBehaviour
     // Start is called before the first frame update
     public float radius = 3f;
     public Transform interactionTransform;
+    public Vector3 offset;
 
     bool isFocus = false;
     bool hasInteracted = false;
@@ -46,6 +47,6 @@ public class Interactable : MonoBehaviour
          if (interactionTransform == null)
             interactionTransform = transform;
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(interactionTransform.position, radius);
+        Gizmos.DrawWireSphere(interactionTransform.position + offset, radius);
     }
 }

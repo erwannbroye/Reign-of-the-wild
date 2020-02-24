@@ -202,6 +202,7 @@ public class characterController : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(ray, out hit, Vector3.Distance(cam.position, transform.position) + 1f)) {
                 Interactable interactable = hit.collider.GetComponent<Interactable>();
+                Debug.Log(hit.collider.gameObject.name);
                 if (interactable != null)
                 {
                     setFocus(interactable);
