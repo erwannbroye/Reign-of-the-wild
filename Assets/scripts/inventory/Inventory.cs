@@ -126,6 +126,16 @@ public class Inventory : MonoBehaviour
 		return (true);
 	}
 
+	public bool isInInventory(Item item)
+	{
+		foreach (Item inventoryItem in items)
+		{
+			if (inventoryItem == item)
+				return (true);
+		}
+		return (false);
+	}
+
 	public void SelectItem(GameObject selectedItemSlot)
 	{
 		if (selectedSlot && selectedSlot != selectedItemSlot)
